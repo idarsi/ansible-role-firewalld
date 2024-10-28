@@ -1,4 +1,11 @@
 ---
+- name: "Adding log to ansible-report"
+  ansible.builtin.lineinfile:
+    path: "{{ fw_ansible_report_path }}"
+    line: "{{ ansible.date_time.date }} {{ ansible_date_time.time }} [{{ fw_name }}] user: {{ ansible_user_id }} state: {{ state }}"
+    create: true
+  when: fw_ansible_report
+
 - name: "Ensure firewalld is present"
   ansible.builtin.include_tasks: present.yml
   when: state | default('present') == 'present'

@@ -15,3 +15,9 @@ no_proxy: ""
 dnf_sslverify: true
 dnf_validate_certs: true
 dnf_disable_gpg_check: false
+
+# REPORTING
+
+fw_name: "firewalld"
+fw_ansible_report: false
+fw_ansible_report_path: "ansible-report.log"
