@@ -1,0 +1,17 @@
+---
+# FIREWALLD DEFAULT CONFIGURATION
+
+fw_zone: "public"
+fw_interface: ""
+
+# PROXY DEFAULT CONFIGURATION
+
+http_proxy: ""
+https_proxy: ""
+no_proxy: ""
+
+# DNF PACKAGE DEFAULT CONFIGURATION
+
+dnf_sslverify: true
+dnf_validate_certs: true
+dnf_disable_gpg_check: false

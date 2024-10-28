@@ -1,0 +1,8 @@
+---
+- name: "Ensure firewalld is present"
+  ansible.builtin.include_tasks: present.yml
+  when: state | default('present') == 'present'
+
+- name: "Ensure firewalld is absent"
+  ansible.builtin.include_tasks: absent.yml
+  when: state == 'absent'

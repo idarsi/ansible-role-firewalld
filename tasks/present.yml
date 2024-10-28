@@ -1,0 +1,5 @@
+---
+- name: "Ensuring firewalld is present"
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
