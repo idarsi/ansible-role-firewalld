@@ -3,6 +3,8 @@
   ansible.builtin.lineinfile:
     path: "{{ fw_ansible_report_path }}"
     line: "{{ ansible.date_time.date }} {{ ansible_date_time.time }} [{{ fw_name }}] user: {{ ansible_user_id }} state: {{ state }}"
+    owner: root
+    group: root
     create: true
   when: fw_ansible_report
 
@@ -13,3 +15,49 @@
 - name: "Ensure firewalld is absent"
   ansible.builtin.include_tasks: absent.yml
   when: state == 'absent'
+
+- name: "Ensure firewalld port is open"
+  ansible.builtin.include_tasks: port_open.yml
+  when: state == 'port_open'
+
+- name: "Ensure firewalld port is closed"
+  ansible.builtin.include_tasks: port_closed.yml
+  when: state == 'port_closed'
+
+- name: "Ensure firewalld service is open"
+  ansible.builtin.include_tasks: service_open.yml
+  when: state == 'service_open'
+
+- name: "Ensure firewalld service is closed"
+  ansible.builtin.include_tasks: service_closed.yml
+  when: state == 'service_closed'
+
+- name: "Ensure firewalld ipsets are present"
+  ansible.builtin.include_tasks: ipset_present.yml
+  when: state == 'ipset_present'
+
+- name: "Ensure firewalld ipsets are absent"
+  ansible.builtin.include_tasks: ipset_absent.yml
+  when: state == 'ipset_absent'
+
+- name: "Ensure ips are present in ipsets"
+  ansible.builtin.include_tasks: ipset_ip_present.yml
+  when: state == 'ipset_ip_present'
+
+- name: "Ensure ips are absent in ipsets"
+  ansible.builtin.include_tasks: ipset_ip_absent.yml
+  when: state == 'ipset_ip_absent'
+
+- name: "Ensure ipset is added to rich rule"
+  ansible.builtin.include_tasks: ipset_port_open.yml
+  when: state == 'ipset_port_open'
+
+- name: "Ensure ipset is removed from rich rule"
+  ansible.builtin.include_tasks: ipset_port_closed.yml
+  when: state == 'ipset_port_closed'
+
+- name: "Ensure firewalld rules are reloaded"
+  ansible.builtin.command: >
+    firewall-cmd --reload
+  register: my_output
+  changed_when: my_output.rc != 0

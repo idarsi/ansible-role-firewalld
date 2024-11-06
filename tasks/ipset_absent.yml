@@ -1,0 +1,32 @@
+---
+- name: "Collecting ipsets"
+  ansible.builtin.command: >
+    firewall-cmd --get-ipsets
+  register: ipsets
+  changed_when: false
+
+- name: "Collecting rich rules"
+  ansible.builtin.command: >
+    firewall-cmd --list-rich-rules
+  register: rich_rules
+  changed_when: false
+
+- name: "Creating list of rich rules that match our ipsets"
+  ansible.builtin.set_fact:
+    rich_rule_list: "{{ (rich_rule_list | default([])) + (rich_rules.stdout.splitlines() | select('search', 'ipset=\"' + item.name + '\"') | list) }}"
+  loop: "{{ fw_ipsets }}"
+
+- name: "Ensuring rich rules are deleted from ipsets"
+  ansible.builtin.command: >
+    firewall-cmd --permanent --remove-rich-rule="{{ item }}"
+  loop: "{{ rich_rule_list }}"
+  register: my_output
+  changed_when: my_output.rc != 0
+
+- name: "Ensuring ipset is absent"
+  ansible.builtin.command: >
+    firewall-cmd --permanent --delete-ipset="{{ item.name }}"
+  loop: "{{ fw_ipsets }}"
+  when: "item.name in ipsets.stdout.split()"
+  register: my_output
+  changed_when: my_output.rc != 0

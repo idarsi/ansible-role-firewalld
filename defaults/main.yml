@@ -3,6 +3,9 @@
 
 fw_zone: "public"
 fw_interface: ""
+fw_protocol: "tcp"
+fw_ipset_type: "hash:net"
+fw_config_path: "/etc/firewalld/"
 
 # PROXY DEFAULT CONFIGURATION
 

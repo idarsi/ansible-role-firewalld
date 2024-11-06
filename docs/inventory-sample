@@ -1,0 +1,12 @@
+firewalld:
+  hosts:
+    my-machine-1
+    my-machine-2
+  vars:
+    fw_ipsets:
+      - name: "ssh"
+        entries:
+          - 192.168.122.0/24
+        in:
+          ports:
+            - 22/tcp

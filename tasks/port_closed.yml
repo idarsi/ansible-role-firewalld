@@ -1,0 +1,4 @@
+---
+- name: "Ensuring port is closed"
+  ansible.builtin.command: >
+    firewall-cmd --remove-port="{{ fw_port }}/{{ fw_protocol }}" --permanent --zone="{{ fw_zone }}"

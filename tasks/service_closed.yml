@@ -1,0 +1,4 @@
+---
+- name: "Ensuring service is closed"
+  ansible.builtin.command: >
+    firewall-cmd --remove-service="{{ fw_service }}" --permanent --zone="{{ fw_zone }}"

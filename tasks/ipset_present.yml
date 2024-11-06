@@ -1,0 +1,11 @@
+---
+- name: "Collecting ipsets"
+  ansible.builtin.command: >
+    firewall-cmd --get-ipsets
+  register: ipsets
+
+- name: "Ensuring ipset is present"
+  ansible.builtin.command: >
+    firewall-cmd --permanent --new-ipset="{{ item.name }}" --type="{{ fw_ipset_type }}"
+  loop: "{{ fw_ipsets }}"
+  when: "item.name not in ipsets.stdout.split()"

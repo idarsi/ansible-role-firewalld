@@ -15,4 +15,8 @@ This ansible role is meant for easier firewalld management.
 Requirements
 ------------
 
-- dnf package manager
+Control machine:
+- Ansible version 2.11 or later
+
+Target machine:
+- DNF package manager

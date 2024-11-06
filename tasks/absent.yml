@@ -2,4 +2,4 @@
 - name: "Ensuring firewalld is absent"
   ansible.builtin.dnf:
     name: firewalld
-    state: present
+    state: absent

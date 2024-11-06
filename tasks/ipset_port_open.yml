@@ -1,0 +1,7 @@
+---
+- name: "Ensuring port is open for ipset"
+  ansible.builtin.command: >
+    firewall-cmd --permanent --add-rich-rule="rule source ipset='{{ item.0.name }}' port port={{ item.1 | split('/') | first }} protocol={{ item.1 | split('/') | last }} accept"
+  loop: "{{ fw_ipsets | subelements('in.ports') }}"
+  register: my_output
+  changed_when: my_output.rc != 0
