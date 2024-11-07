@@ -15,3 +15,9 @@
     firewall-cmd --permanent --new-ipset="{{ item.name }}" --type="{{ fw_ipset_type }}"
   loop: "{{ fw_ipsets }}"
   when: "item.name not in ipsets.stdout.split()"
+
+- name: "Ensuring ipset description is set if available"
+  ansible.builtin.command: >
+    firewall-cmd --permanent --ipset="{{ item.name }}" --set-description="{{ item.description }}"
+  loop: "{{ fw_ipsets }}"
+  when: "item.name in ipsets.stdout.split() and item.description is defined"
