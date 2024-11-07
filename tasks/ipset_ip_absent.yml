@@ -1,4 +1,10 @@
 ---
+- name: "Ensure fw_ipsets is defined"
+  ansible.builtin.asset:
+    that:
+      - fw_ipsets is defined
+    fail_msg: "fw_ipsets is not defined"
+
 - name: "Collecting ipsets"
   ansible.builtin.command: >
     firewall-cmd --get-ipsets

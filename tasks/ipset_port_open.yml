@@ -1,4 +1,10 @@
 ---
+- name: "Ensure fw_ipsets is defined"
+  ansible.builtin.asset:
+    that:
+      - fw_ipsets is defined
+    fail_msg: "fw_ipsets is not defined"
+
 - name: "Ensuring port is open for ipset"
   ansible.builtin.command: >
     firewall-cmd --permanent --add-rich-rule="rule source ipset='{{ item.0.name }}' port port={{ item.1 | split('/') | first }} protocol={{ item.1 | split('/') | last }} accept"
