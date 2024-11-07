@@ -5,6 +5,7 @@ firewalld:
   vars:
     fw_ipsets:
       - name: "ssh"
+        description: "Jumphosts"
         entries:
           - 192.168.122.0/24
         in:
