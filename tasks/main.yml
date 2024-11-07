@@ -16,6 +16,14 @@
   ansible.builtin.include_tasks: absent.yml
   when: state == 'absent'
 
+- name: "Ensure firewalld is started"
+  ansible.builtin.include_tasks: started.yml
+  when: state == 'started'
+
+- name: "Ensure firewalld is stopped"
+  ansible.builtin.include_tasks: stopped.yml
+  when: state == 'stopped'
+
 - name: "Ensure firewalld port is open"
   ansible.builtin.include_tasks: port_open.yml
   when: state == 'port_open'
@@ -55,9 +63,3 @@
 - name: "Ensure ipset is removed from rich rule"
   ansible.builtin.include_tasks: ipset_port_closed.yml
   when: state == 'ipset_port_closed'
-
-- name: "Ensure firewalld rules are reloaded"
-  ansible.builtin.command: >
-    firewall-cmd --reload
-  register: my_output
-  changed_when: my_output.rc != 0

@@ -1,9 +1,9 @@
 ---
-- name: "Ensure fw_ipsets is defined"
-  ansible.builtin.asset:
+- name: "Ensuring required variables are defined"
+  ansible.builtin.assert:
     that:
       - fw_ipsets is defined
-    fail_msg: "fw_ipsets is not defined"
+    fail_msg: "All tests did not pass"
 
 - name: "Collecting ipsets"
   ansible.builtin.command: >
