@@ -56,13 +56,21 @@
   ansible.builtin.include_tasks: ipset_ip_absent.yml
   when: state == 'ipset_ip_absent'
 
-- name: "Ensure ipset is added to rich rule"
+- name: "Ensure ipset port is added to rich rule"
   ansible.builtin.include_tasks: ipset_port_open.yml
   when: state == 'ipset_port_open'
 
-- name: "Ensure ipset is removed from rich rule"
+- name: "Ensure ipset port is removed from rich rule"
   ansible.builtin.include_tasks: ipset_port_closed.yml
   when: state == 'ipset_port_closed'
+
+- name: "Ensure ipset service is added to rich rule"
+  ansible.builtin.include_tasks: ipset_service_open.yml
+  when: state == 'ipset_service_open'
+
+- name: "Ensure ipset service is removed from rich rule"
+  ansible.builtin.include_tasks: ipset_service_closed.yml
+  when: state == 'ipset_service_closed'
 
 - name: "Ensure firewalld is reloaded"
   ansible.builtin.include_tasks: reloaded.yml

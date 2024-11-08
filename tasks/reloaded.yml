@@ -1,5 +1,5 @@
 ---
-- name: "Ensure firewalld rules are reloaded"
+- name: "Ensuring firewalld rules are reloaded"
   ansible.builtin.command: >
     firewall-cmd --reload
   register: my_output
