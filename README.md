@@ -12,7 +12,7 @@ Overview
 
 This ansible role is meant for easier firewalld management specially with ipsets.
 
-Uses only firewall-cmd command, not any firewalld ansible module.
+Uses only firewall-cmd command, not any firewalld ansible modules.
 
 Requirements
 ------------

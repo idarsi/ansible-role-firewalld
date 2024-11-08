@@ -7,14 +7,14 @@
 
 - name: "Ensuring inbound service is closed for ipset"
   ansible.builtin.command: >
-    firewall-cmd --permanent --remove-rich-rule="rule source ipset='{{ item.0.name }}' service name={{ item.1 }} accept"
+    firewall-cmd --permanent --zone="{{ fw_zone }}" --remove-rich-rule="rule source ipset='{{ item.0.name }}' service name={{ item.1 }} accept"
   loop: "{{ fw_ipsets | selectattr('in.services', 'defined') | subelements('in.services') }}"
   register: my_output
   changed_when: my_output.rc != 0
 
 - name: "Ensuring outbound service is closed for ipset"
   ansible.builtin.command: >
-    firewall-cmd --permanent --remove-rich-rule="rule destination ipset='{{ item.0.name }}' service name={{ item.1 }} accept"
+    firewall-cmd --permanent --zone="{{ fw_zone }}" --remove-rich-rule="rule destination ipset='{{ item.0.name }}' service name={{ item.1 }} accept"
   loop: "{{ fw_ipsets | selectattr('out.services', 'defined') | subelements('out.services') }}"
   register: my_output
   changed_when: my_output.rc != 0

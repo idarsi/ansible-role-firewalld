@@ -1,4 +1,4 @@
 ---
 - name: "Ensuring service is open"
   ansible.builtin.command: >
-    firewall-cmd --add-service="{{ fw_service }}" --permanent --zone="{{ fw_zone }}"
+    firewall-cmd --permanent --zone="{{ fw_zone }}" --add-service="{{ fw_service }}"
