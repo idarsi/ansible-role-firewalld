@@ -63,3 +63,7 @@
 - name: "Ensure ipset is removed from rich rule"
   ansible.builtin.include_tasks: ipset_port_closed.yml
   when: state == 'ipset_port_closed'
+
+- name: "Ensure firewalld is reloaded"
+  ansible.builtin.include_tasks: reloaded.yml
+  when: state == 'reloaded'
