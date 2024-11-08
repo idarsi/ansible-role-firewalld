@@ -7,14 +7,20 @@
 
 - name: "Ensuring inbound port is closed for ipset"
   ansible.builtin.command: >
-    firewall-cmd --permanent --zone="{{ fw_zone }}" --remove-rich-rule="rule source ipset='{{ item.0.name }}' port port={{ item.1 | split('/') | first }} protocol={{ item.1 | split('/') | last }} accept"
+    firewall-cmd
+    --permanent
+    --zone="{{ fw_zone }}"
+    --remove-rich-rule="rule source ipset='{{ item.0.name }}' port port={{ item.1 | split('/') | first }} protocol={{ item.1 | split('/') | last }} accept"
   loop: "{{ fw_ipsets | selectattr('in.ports', 'defined') | subelements('in.ports') }}"
   register: my_output
   changed_when: my_output.rc != 0
 
 - name: "Ensuring outbound port is closed for ipset"
   ansible.builtin.command: >
-    firewall-cmd --permanent --zone="{{ fw_zone }}" --remove-rich-rule="rule destination ipset='{{ item.0.name }}' port port={{ item.1 | split('/') | first }} protocol={{ item.1 | split('/') | last }} accept"
+    firewall-cmd
+    --permanent
+    --zone="{{ fw_zone }}"
+    --remove-rich-rule="rule destination ipset='{{ item.0.name }}' port port={{ item.1 | split('/') | first }} protocol={{ item.1 | split('/') | last }} accept"
   loop: "{{ fw_ipsets | selectattr('out.ports', 'defined') | subelements('out.ports') }}"
   register: my_output
   changed_when: my_output.rc != 0

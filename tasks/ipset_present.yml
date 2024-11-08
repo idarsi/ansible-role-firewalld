@@ -9,15 +9,20 @@
   ansible.builtin.command: >
     firewall-cmd --get-ipsets
   register: ipsets
+  changed_when: false
 
 - name: "Ensuring ipset is present"
   ansible.builtin.command: >
     firewall-cmd --permanent --new-ipset="{{ item.name }}" --type="{{ fw_ipset_type }}"
   loop: "{{ fw_ipsets }}"
   when: "item.name not in ipsets.stdout.split()"
+  register: my_output
+  changed_when: my_output.rc != 0
 
 - name: "Ensuring ipset description is set if available"
   ansible.builtin.command: >
     firewall-cmd --permanent --ipset="{{ item.name }}" --set-description="{{ item.description }}"
   loop: "{{ fw_ipsets }}"
   when: "item.name in ipsets.stdout.split() and item.description is defined"
+  register: my_output
+  changed_when: my_output.rc != 0

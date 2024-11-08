@@ -5,6 +5,7 @@
     line: "{{ ansible.date_time.date }} {{ ansible_date_time.time }} [{{ fw_name }}] user: {{ ansible_user_id }} state: {{ state }}"
     owner: root
     group: root
+    mode: og-rwx
     create: true
   when: fw_ansible_report
 

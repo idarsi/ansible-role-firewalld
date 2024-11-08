@@ -2,3 +2,5 @@
 - name: "Ensuring service is open"
   ansible.builtin.command: >
     firewall-cmd --permanent --zone="{{ fw_zone }}" --add-service="{{ fw_service }}"
+  register: my_output
+  changed_when: my_output.rc != 0
