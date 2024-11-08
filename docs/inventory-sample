@@ -9,5 +9,11 @@ firewalld:
         entries:
           - 192.168.122.0/24
         in:
+          services:
+            - ssh
+      - name: "postgresql"
+        entries:
+          - 192.168.122.5/32
+        in:
           ports:
-            - 22/tcp
+            - 5551/tcp
