@@ -13,7 +13,9 @@
 
 - name: "Ensuring ip is present in ipset"
   ansible.builtin.command: >
-    firewall-cmd --permanent --ipset="{{ item.0.name }}" --add-entry="{{ item.1 }}"
+    firewall-cmd
+    --ipset="{{ item.0.name }}" --add-entry="{{ item.1 }}"
+    --permanent
   loop: "{{ fw_ipsets | subelements('entries') }}"
   when: "item.0.name in ipsets.stdout.split()"
   register: my_output

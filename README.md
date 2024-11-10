@@ -22,3 +22,8 @@ Control machine:
 
 Target machine:
 - DNF package manager
+
+Code Quality
+------------
+
+This project adheres to the [Ansible Lint](https://ansible-lint.readthedocs.io) **production** profile, ensuring high-quality and production-ready configuration management.
